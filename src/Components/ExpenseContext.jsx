@@ -50,6 +50,15 @@ function ExpenseProvider({ children }){
     )
   }
 
+  const FormatBalance = (amount) => {
+    let x = amount.toFixed(2).split('.')
+    return(
+      '#' + (x[0].split('')[0]==='-'? '-' : '')+x[0].split('').reverse().reduce(function(acc, num, i, orig) {
+        return num === '-' ? acc : num + (i && !(i % 3) ? ',' : '') + acc;
+      }, '') + '.' + x[1]
+    )
+  }
+
 
   const mappedCards = cards.map(card => card.amount)
   // console.log(mappedCards)
@@ -72,7 +81,8 @@ function ExpenseProvider({ children }){
         onAddAmount: handleAmount,
         totalIncome,
         totalExpense, 
-        FormatAmount, 
+        FormatAmount,
+        FormatBalance,
         handleSubmit, 
     }}>
       {children}
